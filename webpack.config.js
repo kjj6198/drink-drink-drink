@@ -28,6 +28,10 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /.css$/,
+        use: ['vue-style-loader', 'css-loader'],
+      },
+      {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
@@ -44,7 +48,7 @@ module.exports = {
     new webpack.NamedModulesPlugin(),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
-      chunks: 'app',
+      chunks: ['app'],
       filename: 'index.html',
       template: './app/index.html',
     }),

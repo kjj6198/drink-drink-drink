@@ -1,7 +1,13 @@
 {
-  "presets": ["es2015", "env"],
+  "presets": [
+    "es2015",
+    "env",
+    "stage-2"
+  ],
   "plugins": [
     "syntax-dynamic-import",
+    "syntax-jsx",
+    "transform-vue-jsx",
     [
       "module-resolver",
       {
@@ -9,6 +15,6 @@
           "@": "./app"
         }
       }
-    ]    
+    ]
   ]
 }
