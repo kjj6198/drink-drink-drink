@@ -15,6 +15,7 @@ module.exports = {
     alias: {
       vue: 'vue/dist/vue.js',
     },
+    extensions: ['.js', '.vue'],
   },
   entry: {
     app: './app/index.js',

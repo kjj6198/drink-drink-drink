@@ -1,20 +1,26 @@
 <template>
   <div>
-    <div>Hello world</div>
-    <Button />
+    <ErrorBoundary>
+      <p>hello world</p>
+    </ErrorBoundary>
   </div>
 </template>
 
 <script>
-import Button from '@/components/Button';
+import ErrorBoundary from '@/components/ErrorBoundary';
+
 export default {
-  data() {
-    return {
-      hello: 'world',
-    };
-  },
+  
+  data: () => ({
+    names: [
+      { id: 1, text: 'hello' },
+      { id: 2, text: 'kalan' },
+      { id: 3, text: null },
+    ]
+  }),
+  errorCaptured: console.log,
   components: {
-    Button,
+    ErrorBoundary,
   },
 };
 </script>

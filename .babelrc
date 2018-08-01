@@ -1,6 +1,7 @@
 {
   "presets": ["es2015", "env"],
   "plugins": [
+    "syntax-dynamic-import",
     [
       "module-resolver",
       {
