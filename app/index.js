@@ -18,7 +18,6 @@ epicPlugin.run(action$ =>
     type: 'test',
   })
 );
-
 const routes = [{ path: '/', component: Home, props: true }];
 
 const router = new VueRouter({

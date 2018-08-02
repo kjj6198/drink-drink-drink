@@ -1,5 +1,5 @@
-import { FETCH_MENUS_SUCCESS } from './constants';
 import { getMenus } from '@/api';
+import { FETCH_MENUS_SUCCESS } from './constants';
 
 export const fetchMenus = context => {
   getMenus()
