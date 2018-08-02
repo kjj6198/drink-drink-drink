@@ -1,14 +1,23 @@
 <template>
     <Table>
       <thead>
-        <tr><th>訂單名稱</th><th>商家名稱</th><th>倒數</th><th></th></tr>
+        <tr>
+          <th>訂單名稱</th>
+          <th>商家名稱</th>
+          <th>倒數</th>
+          <th>杯數</th>
+          <th>訂單金額</th>
+          <th></th>
+        </tr>
       </thead>
       <tbody>
           <MenuItem v-for="menu in list"
-            v-bind:key="menu.id"
-            v-bind:menuName="menu.name"
-            v-bind:shopName="menu.drink_shop.name"
-            v-bind:countdown="menu.end_time"
+            :key="menu.id"
+            :menuName="menu.name"
+            :shopName="menu.drink_shop.name"
+            :countdown="menu.end_time"
+            :orders="menu.orders"
+            :total="menu.total"
           />
       </tbody>
     </Table>
@@ -38,6 +47,10 @@ const Table = styled.table`
   > tbody td {
     padding: 0.75rem;
     border: 1px solid #eee;
+  }
+
+  > tbody tr:nth-child(2n) {
+    background-color: #f8f8f8;
   }
 `;
 
