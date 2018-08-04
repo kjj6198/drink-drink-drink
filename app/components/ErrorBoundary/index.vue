@@ -3,7 +3,7 @@
     <slot></slot>
   </div>
   <!-- TODO: prettify error -->
-  <p v-else-if="hasError && error">{{ error.toString() }}</p>
+  <p v-else-if="hasError && error">某樣東西出錯了</p>
 </template>
 
 <script>
@@ -13,15 +13,14 @@ export default {
     hasError: false,
     error: null,
   }),
-  components: {
-
-  },
-  errorCaptured (err, vm, info) {
+  components: {},
+  errorCaptured(err, vm, info) {
     this.hasError = true;
     this.error = err;
     // [TODO] enhance error logger when demo done
-    console.warn(info, vm) 
+    // send log.
+    console.warn(info, vm);
   },
-}
+};
 </script>
 

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Vuex from 'vuex';
 import createEpicPlugin from './store/epicPlugin';
+import userModule from '@/containers/AuthProvider/module';
 import './style.js';
 
 import Home from './pages/Home.vue';
@@ -11,16 +12,15 @@ import Home from './pages/Home.vue';
 const epicPlugin = createEpicPlugin();
 const store = new Vuex.Store({
   plugins: [epicPlugin],
+  modules: {
+    user: userModule,
+  },
 });
 
-epicPlugin.run(action$ =>
-  action$.ofType('menus/menus/FETCH_MENU_SUCCESS').mapTo({
-    type: 'test',
-  })
-);
 const routes = [{ path: '/', component: Home, props: true }];
 
 const router = new VueRouter({
+  mode: 'history',
   routes,
 });
 

@@ -10,7 +10,6 @@ const createEpicPlugin = (options = {}) => {
     const result$ = epic$
       .map(epic => {
         const output$ = epic(action$, store.state); // should return commit.
-        console.log(output$);
         if (!output$) {
           throw new TypeError('epic must return a Observable.');
         }

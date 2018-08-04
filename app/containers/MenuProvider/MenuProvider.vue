@@ -17,7 +17,7 @@
             :shopName="menu.drink_shop.name"
             :countdown="menu.end_time"
             :orders="menu.orders"
-            :total="menu.total"
+            :sum="menu.sum"
           />
       </tbody>
     </Table>
@@ -42,6 +42,7 @@ const Table = styled.table`
     vertical-align: bottom;
     color: #444;
     background-color: #c1f2ff;
+    border: 1px solid #fff;
   }
 
   > tbody td {
@@ -55,8 +56,10 @@ const Table = styled.table`
 `;
 
 export default {
-  mounted() {
-    this.fetchMenus();
+  created() {
+    if (this.list.length === 0) {
+      this.fetchMenus();
+    }
   },
   components: {
     Table,

@@ -10,6 +10,7 @@ module.exports = {
     port: 3000,
     contentBase: path.join(__dirname, 'build'),
     disableHostCheck: true,
+    historyApiFallback: true,
   },
   resolve: {
     alias: {

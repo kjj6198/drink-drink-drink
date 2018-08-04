@@ -1,15 +1,15 @@
 <template>
   <div>
     <ErrorBoundary>
-      <Navbar />
+      <Navbar :isLoggedIn="false" />
       <MenuProvider />
     </ErrorBoundary>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
 import ErrorBoundary from '@/components/ErrorBoundary';
-import LoadingCircle from '@/components/LoadingCircle';
 import MenuProvider from '@/containers/MenuProvider';
 import Navbar from '@/components/Navbar';
 
@@ -18,8 +18,17 @@ export default {
     ErrorBoundary,
     Navbar,
     MenuProvider,
-    LoadingCircle,
   },
-  methods: {},
+  created() {
+    if (!this.isLoggedIn) {
+      this.doAuth();
+    }
+  },
+  computed: {
+    ...mapState('user', ['isLoggedIn']),
+  },
+  methods: {
+    ...mapActions('user', ['doAuth']),
+  },
 };
 </script>

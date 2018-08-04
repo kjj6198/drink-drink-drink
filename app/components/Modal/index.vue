@@ -20,13 +20,10 @@ export default {
   components: {
     ModalWrapper,
   },
-  created() {
+  mounted() {
     this.escape$ = Observable.fromEvent(document, 'keydown')
       .filter(e => e.keyCode === 27) // ESC
       .subscribe(() => this.closeModal())
-  },
-  mounted() {
-
   },
   beforeDestroy() {
     if (this.escape$) {
