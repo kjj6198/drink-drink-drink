@@ -1,6 +1,6 @@
 import styled from 'vue-styled-components';
 
-const Wrapper = styled.div`
+const ModalWrapper = styled.div`
   position: fixed;
   left: 0;
   right: 0;
@@ -15,3 +15,5 @@ const Wrapper = styled.div`
   overflow: hidden;
   pointer-events: ${props => (props.active && props.overlay ? 'auto' : 'none')};
 `;
+
+export default ModalWrapper;

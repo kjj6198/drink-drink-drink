@@ -36,7 +36,11 @@ export default {
 
 <template>
   <nav class="navbar">
-    <Logo>17 Drink</Logo>
+    <Logo>
+      <router-link class="logo-link" to="/">
+        17 Drink
+      </router-link>
+    </Logo>
     <OptionsWrapper>
       <router-link
         class="navbar-item"
@@ -96,5 +100,14 @@ export default {
 
 .navbar-item:not(:last-child) {
   margin-right: 16px;
+}
+
+.logo-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.logo-link:hover {
+  text-decoration: underline;
 }
 </style>

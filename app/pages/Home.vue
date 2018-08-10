@@ -1,23 +1,20 @@
 <template>
-  <div>
-    <ErrorBoundary>
-      <Navbar :isLoggedIn="false" />
-      <MenuProvider />
-    </ErrorBoundary>
-  </div>
+  <ErrorBoundary>
+    <MenuProvider v-if="$route.path === '/'"/>
+  </ErrorBoundary>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex';
 import ErrorBoundary from '@/components/ErrorBoundary';
-import MenuProvider from '@/containers/MenuProvider';
 import Navbar from '@/components/Navbar';
+import MenuProvider from '@/containers/MenuProvider';
 
 export default {
   components: {
     ErrorBoundary,
-    Navbar,
     MenuProvider,
+    Navbar,
   },
   created() {
     if (!this.isLoggedIn) {

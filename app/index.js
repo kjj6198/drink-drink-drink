@@ -5,7 +5,9 @@ import createEpicPlugin from './store/epicPlugin';
 import userModule from '@/containers/AuthProvider/module';
 import './style.js';
 
-import Home from './pages/Home.vue';
+import Home from './pages/Home';
+import App from './pages/App';
+import Navbar from '@/components/Navbar';
 
 [Vuex, VueRouter].forEach(plugin => Vue.use(plugin));
 
@@ -17,7 +19,19 @@ const store = new Vuex.Store({
   },
 });
 
-const routes = [{ path: '/', component: Home, props: true }];
+const routes = [
+  {
+    path: '/',
+    component: Home,
+    props: true,
+  },
+  {
+    path: '/drink_shops',
+    component: () =>
+      import(/* webpackChunkName: "DrinkShops" */ '@/containers/DrinkShops'),
+    props: true,
+  },
+];
 
 const router = new VueRouter({
   mode: 'history',
@@ -27,4 +41,5 @@ const router = new VueRouter({
 const app = new Vue({
   router,
   store,
+  components: { App },
 }).$mount('#root');

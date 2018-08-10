@@ -14,7 +14,7 @@
           <MenuItem v-for="menu in list"
             :key="menu.id"
             :menuName="menu.name"
-            :shopName="menu.drink_shop.name"
+            :shopName="menu.drink_shop && menu.drink_shop.name"
             :countdown="menu.end_time"
             :orders="menu.orders"
             :sum="menu.sum"
@@ -65,7 +65,9 @@ export default {
     Table,
     MenuItem,
   },
-  computed: mapGetters({ list: 'menus/list' }),
+  computed: {
+    ...mapGetters({ list: 'menus/list' }),
+  },
   methods: {
     ...mapActions({ fetchMenus: 'menus/fetchMenus' }),
   },

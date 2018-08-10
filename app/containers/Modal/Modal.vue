@@ -6,7 +6,7 @@
 
 <script>
 import { Observable } from 'rxjs';
-import styled from 'styled-components';
+import styled from 'vue-styled-components';
 import ModalWrapper from './ModalWrapper';
 
 const Overlay = styled.div`
@@ -23,15 +23,12 @@ export default {
   mounted() {
     this.escape$ = Observable.fromEvent(document, 'keydown')
       .filter(e => e.keyCode === 27) // ESC
-      .subscribe(() => this.closeModal())
+      .subscribe(() => this.closeModal());
   },
   beforeDestroy() {
     if (this.escape$) {
       this.escape$.unsubscribe();
     }
   },
-  methods: {
-    closeModal()
-  }
-}
+};
 </script>

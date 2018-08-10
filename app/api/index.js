@@ -17,3 +17,4 @@ export const createAPI = (path, options = {}) =>
   });
 
 export const getMenus = () => createAPI('/menus');
+export const getDrinkShops = () => createAPI('/drink_shops');
