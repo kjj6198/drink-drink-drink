@@ -1,7 +1,9 @@
 import styled from 'vue-styled-components';
 
 const ModalBody = styled.div`
-  display: ${props => (props.isOpen ? 'flex' : 'none')};
+  position: relative;
+  z-index: 10;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -15,6 +17,6 @@ const ModalBody = styled.div`
   overflow-y: scroll;
 `;
 
-ModalBody.props = ['isOpen', 'isNarrow'];
+ModalBody.props = ['isOpened', 'isNarrow'];
 
 export default ModalBody;

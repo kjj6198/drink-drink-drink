@@ -11,9 +11,9 @@ const ModalWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   overflow: hidden;
-  pointer-events: ${props => (props.active && props.overlay ? 'auto' : 'none')};
+  background-color: rgba(0, 0, 0, 0.4);
 `;
 
 export default ModalWrapper;

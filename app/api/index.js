@@ -18,3 +18,4 @@ export const createAPI = (path, options = {}) =>
 
 export const getMenus = () => createAPI('/menus');
 export const getDrinkShops = () => createAPI('/drink_shops');
+export const getRanks = () => createAPI('/stats/all_ranks');

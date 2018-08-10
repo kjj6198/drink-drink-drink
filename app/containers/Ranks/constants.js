@@ -1,0 +1,2 @@
+export const GET_ALL_RANKS = 'GET_ALL_RANKS';
+export const GET_ALL_RANKS_SUCCESS = 'GET_ALL_RANKS_SUCCESS';

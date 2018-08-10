@@ -31,6 +31,11 @@ const routes = [
       import(/* webpackChunkName: "DrinkShops" */ '@/containers/DrinkShops'),
     props: true,
   },
+  {
+    path: '/stats/ranks',
+    component: () => import(/* webpackChunkName: "Rank" */ '@/pages/Rank'),
+    props: true,
+  },
 ];
 
 const router = new VueRouter({

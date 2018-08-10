@@ -8,11 +8,12 @@
     </td>
     <td class="number">{{ orders.length }}</td>
     <td class="number">{{ totalFormatted }}</td>
-    <td><Button theme="filled" type="rect">我要訂飲料</Button></td>
+    <td><Button :onClick="openModal" :disabled="isEnded" theme="filled" type="rect">我要訂飲料</Button></td>
   </tr>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import Button from '@/components/Button';
 import Countdown from '@/components/Countdown';
 
@@ -29,6 +30,14 @@ export default {
     countdown: [String, Number],
     orders: Array,
     sum: Number,
+  },
+  methods: {
+    openModal() {
+      this.$store.commit('modal/OPEN_MODAL', {
+        params: {},
+        name: 'CreateDrinkShop',
+      });
+    },
   },
   computed: {
     isEnded() {
