@@ -20,7 +20,9 @@
             :src="rank.picture"
             :alt="rank.username"
             class="avatar"
-            /></td>
+            />
+            <span v-show="!rank.picture">N/A</span>
+          </td>
           <td :style="{ textAlign: 'center' }">{{ rank.username }}</td>
           <td class="number" v-formatted="rank.sum">{{ rank.sum }}</td>
         </tr>

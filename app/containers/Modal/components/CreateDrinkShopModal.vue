@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import ModalBody from '../ModalBody';
 export default {
   components: {
@@ -30,6 +30,7 @@ export default {
     price: 10,
     note: '',
   }),
+  computed: {},
   methods: {
     ...mapActions('modal', ['closeModal']),
   },

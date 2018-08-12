@@ -7,6 +7,10 @@ export default store => {
     throw new TypeError('store must have registerModule method.');
   }
 
+  if (store.state.modal) {
+    return Promise.resolve();
+  }
+
   const importedModule = import(/* webpackMode: "eager" */ './module');
 
   return importedModule
