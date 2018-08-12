@@ -105,6 +105,7 @@ export default {
   methods: {
     handleClick(e) {
       if (this.onClick) {
+        e.preventDefault();
         this.onClick(e);
       }
       return null;

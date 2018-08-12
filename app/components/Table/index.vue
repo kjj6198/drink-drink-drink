@@ -12,6 +12,7 @@
       <tr v-for="d in data" :key="getKey(d, 'id')">
         <td v-for="key in Object.keys(config)" :key="key" :style="{ textAlign: config[key].align || 'left' }">
           <img class="avatar" :src="getData(d, key)" v-if="config[key].type === 'image' && getData(d, key)"/>
+          <span v-else-if="config[key].custom"><slot :name="key" :data="d"></slot></span>
           <span v-else>{{ getData(d, key) }}</span>
         </td>
       </tr>

@@ -2,10 +2,31 @@
   <ModalBody @close-modal="closeModal">
     <img v-if="menu" :src="menu.drink_shop.image_url" alt="">
     <div class="orders">
+      <form>
       <Table
         :config="config"
         :data="menu.orders"
-      />
+      >
+        <template slot="action" slot-scope="action">
+          <Button
+            v-show="action.data.user.id === info.id"
+            :onClick="handleClick"
+          >{{ isEditing ? '確認' : '修改' }}</Button>
+        </template>
+        <template slot="name" slot-scope="name">
+          <input v-if="isEditing && isMine(name.data)" type="text" :value="name.data.name" />
+          <span v-else>{{ name.data.name }}</span>
+        </template>
+        <template slot="price" slot-scope="price">
+          <input v-if="isEditing && isMine(price.data)" type="number" :value="price.data.price" />
+          <span v-else>{{ price.data.price }}</span>
+        </template>
+        <template slot="note" slot-scope="note">
+          <input v-if="isEditing && isMine(note.data)" type="text" :value="note.data.note" />
+          <span v-else>{{ note.data.note }}</span>
+        </template>
+      </Table>
+      </form>
     </div>
     <form name="order">
       <div>
@@ -57,8 +78,10 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
 import Table from '@/components/Table';
+import Button from '@/components/Button';
 import ModalBody from '../ModalBody';
 
 const prices = [30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80];
@@ -70,6 +93,7 @@ export default {
   components: {
     ModalBody,
     Table,
+    Button,
   },
   data: () => ({
     size: '',
@@ -78,16 +102,23 @@ export default {
     price: 10,
     note: '',
     drinkName: '',
+    isEditing: false,
   }),
   computed: {
     ...mapState('modal', ['params']),
+    ...mapState('user', ['info']),
     config() {
+      const userID = this.info.id;
       return {
         'user.username': { title: '姓名', align: 'center' },
         'user.picture': { title: '照片', type: 'image', align: 'center' },
-        name: { title: '飲料名稱', align: 'center' },
-        price: { title: '價格', align: 'right' },
-        note: { title: '備註' },
+        name: { title: '飲料名稱', align: 'center', custom: true },
+        price: { title: '價格', align: 'right', custom: true },
+        note: { title: '備註', custom: true },
+        action: {
+          title: '',
+          custom: true,
+        },
       };
     },
     menu() {
@@ -115,6 +146,12 @@ export default {
   },
   methods: {
     ...mapActions('modal', ['closeModal']),
+    isMine(data) {
+      return data.user.id === this.info.id;
+    },
+    handleClick() {
+      this.isEditing = !this.isEditing;
+    },
     changeSize(size) {
       this.size = size;
     },
