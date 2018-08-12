@@ -6,6 +6,10 @@ body, html {
   margin: 0;  
 }
 
+body.modal-active {
+  overflow: hidden;
+}
+
 *, *:before, *:after {
   box-sizing: border-box;
 }

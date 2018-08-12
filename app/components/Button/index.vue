@@ -77,7 +77,7 @@ const Button = styled('button', btnProps)`
   cursor: pointer;
   outline: none;
   border: none;
-  font-size: 1em;
+  font-size: 16px;
 
   ${props => theme[props.theme]};
   ${props => type[props.type]};

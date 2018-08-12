@@ -8,7 +8,7 @@
     </td>
     <td class="number">{{ orders.length }}</td>
     <td class="number">{{ totalFormatted }}</td>
-    <td><Button :onClick="openModal" :disabled="isEnded" theme="filled" type="rect">我要訂飲料</Button></td>
+    <td><Button :onClick="() => openModal(menuID)" :disabled="isEnded" theme="filled" type="rect">我要訂飲料</Button></td>
   </tr>
 </template>
 
@@ -32,10 +32,12 @@ export default {
     sum: Number,
   },
   methods: {
-    openModal() {
+    openModal(menuID) {
       this.$store.commit('modal/OPEN_MODAL', {
-        params: {},
-        name: 'CreateDrinkShop',
+        params: {
+          menuID,
+        },
+        name: 'CreateOrder',
       });
     },
   },

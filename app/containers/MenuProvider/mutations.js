@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { FETCH_MENUS_SUCCESS } from './constants';
+import { FETCH_MENUS_SUCCESS, FETCH_MENU_SUCCESS } from './constants';
 
 function mutations() {
   return {

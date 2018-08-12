@@ -49,7 +49,7 @@ export default {
       <router-link
         v-show="isLoggedIn"
         class="navbar-item"
-        to="/rank">排名榜</router-link>
+        to="/stats/ranks">排名榜</router-link>
       <router-link
         v-show="isLoggedIn"
         class="navbar-item"

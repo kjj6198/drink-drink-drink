@@ -1,5 +1,8 @@
 <template>
-  <ModalWrapper v-if="isOpened && name">
+  <ModalWrapper
+    v-if="isOpened && name"
+    @click.self="closeModal"
+  >
     <component
       v-if="isOpened && name && currentModal"
       :is="currentModal"
@@ -8,10 +11,11 @@
 </template>
 
 <script>
-import { Observable } from 'rxjs';
 import styled from 'vue-styled-components';
-import { mapState } from 'vuex';
+import { Observable } from 'rxjs';
+import { mapState, mapActions } from 'vuex';
 import ModalWrapper from './ModalWrapper';
+import CreateOrderModal from './components/CreateOrderModal';
 import CreateDrinkShopModal from './components/CreateDrinkShopModal';
 
 const Overlay = styled.div`
@@ -21,13 +25,22 @@ const Overlay = styled.div`
 `;
 
 const modals = {
+  CreateOrder: CreateOrderModal,
   CreateDrinkShop: CreateDrinkShopModal,
 };
 
 export default {
   name: 'Modal',
+  data: () => ({
+    keydown$: null,
+  }),
   components: {
     ModalWrapper,
+  },
+  mounted() {
+    this.keydown$ = Observable.fromEvent(document, 'keydown')
+      .filter(e => e.keyCode === 27 && this.isOpened && this.name)
+      .subscribe(e => this.closeModal(e));
   },
   data: () => ({
     currentModal: null,
@@ -37,21 +50,18 @@ export default {
 
     if (this.isOpened) {
       document.body.classList.add('modal-active');
+    } else {
+      document.body.classList.remove('modal-active');
     }
   },
   beforeDestroy() {
     document.body.classList.remove('modal-active');
-    if (this.escape$) {
-      this.escape$.unsubscribe();
-    }
   },
   computed: {
     ...mapState('modal', ['isOpened', 'name', 'params']),
   },
   methods: {
-    closeModal(e) {
-      this.$emit('closeModal', e);
-    },
+    ...mapActions('modal', ['closeModal']),
   },
 };
 </script>

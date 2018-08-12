@@ -13,6 +13,7 @@
       <tbody>
           <MenuItem v-for="menu in list"
             :key="menu.id"
+            :menuID="menu.id"
             :menuName="menu.name"
             :shopName="menu.drink_shop && menu.drink_shop.name"
             :countdown="menu.end_time"

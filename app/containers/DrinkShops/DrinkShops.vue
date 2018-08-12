@@ -2,7 +2,11 @@
   <div>
     <TitleWrapper>
       <h3 class="title">飲料店家列表</h3>
-      <Button type="rect" theme="outline">+ 新增飲料店</Button>
+      <Button
+        type="rect"
+        theme="outline"
+        :onClick="() => openModal({ name: 'CreateDrinkShop', params: {} } )"
+      >+ 新增飲料店</Button>
     </TitleWrapper>
     <Loading v-if="loading"/>
     <ListWrapper v-if="!loading">
@@ -67,6 +71,7 @@ export default {
   },
   methods: {
     ...mapActions('drinkShops', ['fetchDrinkShops']),
+    ...mapActions('modal', ['openModal']),
   },
 };
 </script>
