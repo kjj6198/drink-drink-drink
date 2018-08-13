@@ -1,34 +1,49 @@
 <template>
   <ModalBody @close-modal="closeModal">
+    <h2>{{ menu.drink_shop.name }}</h2>
+    <ul>
+      <li>杯數：{{ menu.orders.length }}</li>
+      <li>總計：{{ menu.sum }}</li>
+    </ul>
     <img v-if="menu" :src="menu.drink_shop.image_url" alt="">
+    <div class="menu-info">
+      <h3>
+        <Avatar :src="menu.user.picture" :size="40" />
+        由 {{ menu.user.username }} 所發起的 {{ menu.name }}
+      </h3>
+      <Countdown :endTime="new Date(menu.end_time)" />
+    </div>
     <div class="orders">
       <form>
-      <Table
-        :config="config"
-        :data="menu.orders"
-      >
-        <template slot="action" slot-scope="action">
-          <Button
-            v-show="action.data.user.id === info.id"
-            :onClick="handleClick"
-          >{{ isEditing ? '確認' : '修改' }}</Button>
-        </template>
-        <template slot="name" slot-scope="name">
-          <input v-if="isEditing && isMine(name.data)" type="text" :value="name.data.name" />
-          <span v-else>{{ name.data.name }}</span>
-        </template>
-        <template slot="price" slot-scope="price">
-          <input v-if="isEditing && isMine(price.data)" type="number" :value="price.data.price" />
-          <span v-else>{{ price.data.price }}</span>
-        </template>
-        <template slot="note" slot-scope="note">
-          <input v-if="isEditing && isMine(note.data)" type="text" :value="note.data.note" />
-          <span v-else>{{ note.data.note }}</span>
-        </template>
-      </Table>
+        <Table
+          :config="config"
+          :data="menu.orders"
+        >
+          <template slot="action" slot-scope="action">
+            <Button
+              v-show="action.data.user.id === info.id"
+              :onClick="handleClick"
+            >{{ isEditing ? '確認' : '修改' }}</Button>
+          </template>
+          <template slot="name" slot-scope="name">
+            <input v-if="isEditing && isMine(name.data)" type="text" :value="name.data.name" />
+            <span v-else>{{ name.data.name }}</span>
+          </template>
+          <template slot="price" slot-scope="price">
+            <input v-if="isEditing && isMine(price.data)" type="number" :value="price.data.price" />
+            <span v-else>{{ price.data.price }}</span>
+          </template>
+          <template slot="note" slot-scope="note">
+            <input v-if="isEditing && isMine(note.data)" type="text" :value="note.data.note" />
+            <span v-else>{{ note.data.note }}</span>
+          </template>
+        </Table>
       </form>
     </div>
-    <form name="order">
+    <h3
+      class="has-ended"
+      v-show="isEnded">已截止</h3>
+    <form name="order" v-show="!isEnded">
       <div>
         <label for="orderName">飲料名稱</label>
         <input id="orderName" type="text" v-model="name">
@@ -80,8 +95,10 @@
 <script>
 import Vue from 'vue';
 import { mapActions, mapState } from 'vuex';
+import Avatar from '@/components/Avatar';
 import Table from '@/components/Table';
 import Button from '@/components/Button';
+import Countdown from '@/components/Countdown';
 import ModalBody from '../ModalBody';
 
 const prices = [30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80];
@@ -94,6 +111,8 @@ export default {
     ModalBody,
     Table,
     Button,
+    Countdown,
+    Avatar,
   },
   data: () => ({
     size: '',
@@ -107,6 +126,9 @@ export default {
   computed: {
     ...mapState('modal', ['params']),
     ...mapState('user', ['info']),
+    isEnded() {
+      return new Date(this.menu.end_time) < new Date();
+    },
     config() {
       const userID = this.info.id;
       return {
@@ -188,5 +210,15 @@ export default {
 
 .tag:not(:last-child) {
   margin-right: 8px;
+}
+
+.menu-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.has-ended {
+  text-align: center;
 }
 </style>

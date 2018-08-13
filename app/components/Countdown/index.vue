@@ -3,6 +3,11 @@ import getRemainTime from '@/utils/getRemainTime';
 
 export default {
   name: 'Countdown',
+  beforeMount() {
+    if (this.endTime < new Date(Date.now())) {
+      this.isEnded = true;
+    }
+  },
   mounted() {
     this.startCountdown();
   },
@@ -23,7 +28,9 @@ export default {
     remain() {
       return () => {
         const remainTime = getRemainTime(this.endTime);
-        return `${remainTime.hours}:${remainTime.minutes}:${remainTime.secs}`;
+        return this.isEnded
+          ? '已結束'
+          : `${remainTime.hours}:${remainTime.minutes}:${remainTime.secs}`;
       };
     },
   },

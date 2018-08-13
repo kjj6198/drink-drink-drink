@@ -26,6 +26,12 @@ const routes = [
     props: true,
   },
   {
+    path: '/me',
+    component: () =>
+      import(/* webpackChunkName: "Profile" */ '@/pages/Profile'),
+    props: true,
+  },
+  {
     path: '/drink_shops',
     component: () =>
       import(/* webpackChunkName: "DrinkShops" */ '@/containers/DrinkShops'),
