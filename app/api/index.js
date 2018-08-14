@@ -28,3 +28,12 @@ export const createDrinkShop = data =>
     credentials: 'include',
     body: data,
   });
+
+export const createMenu = data =>
+  Observable.from(
+    fetch(`${baseURL}/menus`, {
+      method: 'POST',
+      credentials: 'include',
+      body: JSON.stringify(data),
+    })
+  );

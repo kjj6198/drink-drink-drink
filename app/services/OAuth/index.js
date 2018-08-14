@@ -25,6 +25,9 @@ export const login = () =>
         body: { id_token: idToken },
         crossDomain: true,
         withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+        },
       }).map(ajaxResponse => ajaxResponse.response)
     );
 
@@ -32,6 +35,9 @@ export const logout = () =>
   createAPI('/user/logout', {
     method: 'POST',
     crossDomain: true,
+    headers: {
+      'Content-Type': 'application/json',
+    },
     withCredentials: 'include',
   });
 
@@ -39,5 +45,6 @@ export const auth = () =>
   createAPI('/user/auth', {
     method: 'POST',
     crossDomain: true,
+    contentType: 'application/json',
     withCredentials: 'include',
   });

@@ -32,6 +32,11 @@ const routes = [
     props: true,
   },
   {
+    path: '/menus/new',
+    component: () =>
+      import(/* webpackChunkName: "CreateMenu" */ '@/pages/NewMenu'),
+  },
+  {
     path: '/drink_shops',
     component: () =>
       import(/* webpackChunkName: "DrinkShops" */ '@/containers/DrinkShops'),

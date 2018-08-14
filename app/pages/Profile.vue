@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>我的歷史紀錄</h2>
-    <ul>
+    <ul v-if="me.rank">
       <li>排名： 第 {{ me.rank.myrank }} 名</li>
       <li>累積金額： {{ me.rank.sum }}</li>
     </ul>
