@@ -37,3 +37,5 @@ export const createMenu = data =>
       body: JSON.stringify(data),
     })
   );
+
+export const createOrder = data => {};

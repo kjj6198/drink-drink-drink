@@ -47,12 +47,13 @@ export default {
 
 
 <style scoped>
+input:not([type='hidden']),
 input[type='text'],
 input[type='password'],
 input[type='number'] {
   width: 100%;
   font-size: 16px;
-  padding: 5px;
+  padding: 8px;
   outline: none;
   border: 0;
   box-shadow: 0 0 0 1px rgb(150, 150, 150);

@@ -37,6 +37,11 @@ const routes = [
       import(/* webpackChunkName: "CreateMenu" */ '@/pages/NewMenu'),
   },
   {
+    path: '/menus/:menu_id',
+    component: () =>
+      import(/* webpackChunkName: "CreateOrder" */ '@/containers/Modal/components/CreateOrderModal'),
+  },
+  {
     path: '/drink_shops',
     component: () =>
       import(/* webpackChunkName: "DrinkShops" */ '@/containers/DrinkShops'),

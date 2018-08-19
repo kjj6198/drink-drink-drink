@@ -80,7 +80,7 @@ export default {
       createMenu(formDataToJSON(data, ['end_time', 'drink_shop_id'])).subscribe(
         result => {
           this.$refs.menu.reset();
-          this.$router.push({ path: '/menu' });
+          this.$router.push({ path: `/menus/${result.id}` });
         }
       );
     },

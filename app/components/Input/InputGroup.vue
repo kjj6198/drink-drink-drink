@@ -15,9 +15,11 @@
     <Input
       v-if="type !== 'option'"
       :inputProps="$props"
+      @input="e => $emit('input', e)"
       @focus="isFocus = true"
       @blur="isFocus = false"
     />
+    <slot></slot>
   </label>
 </template>
 
@@ -37,10 +39,12 @@ export default {
         'is-focus': this.isFocus,
         'form-group': true,
         'is-blocked': this.isBlocked,
+        required: this.required,
       };
     },
   },
   props: {
+    value: { type: [String, Number] },
     min: { type: Number },
     step: { type: Number },
     max: { type: Number },
@@ -64,6 +68,10 @@ export default {
   background-clip: padding-box;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
+}
+
+label.required > .input-label:before {
+  content: '* ';
 }
 
 .input-label {

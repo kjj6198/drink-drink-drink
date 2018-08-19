@@ -43,10 +43,15 @@
     <h3
       class="has-ended"
       v-show="isEnded">已截止</h3>
-    <form name="order" v-show="!isEnded">
-      <div>
-        <label for="orderName">飲料名稱</label>
-        <input id="orderName" type="text" v-model="name">
+    <form ref="orderForm" name="order" v-show="!isEnded" class="orderForm">
+      <InputGroup
+        name="orderName"
+        type="text"
+        label="飲料名稱"
+        required
+        :value="name"
+        @input="e => name = e.target.value"
+      >
         <div class="size-options">
           <span
             class="tag"
@@ -55,10 +60,17 @@
             @click="changeSize(size)"
           >{{ size }}</span>
         </div>
-      </div>
-      <div>
-        <label for="orderPrice">價格</label>
-        <input id="orderPrice" type="number" v-model.number="price">
+      </InputGroup>
+      <InputGroup
+        name="orderPrice"
+        label="價格"
+        type="number"
+        :min="15"
+        :step="5"
+        :value="price"
+        required
+        @input="e => price = parseInt(e.target.value)"
+      >
         <div class="price-options">
           <span
             class="tag"
@@ -67,10 +79,14 @@
             @click="changePrice(price)"
           >${{ price }}</span>
         </div>
-      </div>
-      <div>
-        <label for="orderNote">備註</label>
-        <input id="orderNote" type="text" v-model="note" />
+      </InputGroup>
+      <InputGroup
+        name="orderNote"
+        label="備註"
+        type="text"
+        :value="note"
+        @input="e => note = e.target.value"
+      >
         <div class="note-options">
           <label>甜度</label>
           <span
@@ -87,8 +103,14 @@
             @click="changeIce(ice)"
           >{{ ice }}</span>
         </div>
-      </div>
-    </form>    
+      </InputGroup>
+    </form>
+    <Button
+      v-if="isEnded"
+      :onClick="handleSubmit"
+    >
+      新增訂單
+    </Button>
   </ModalBody>
 </template>
 
@@ -99,6 +121,7 @@ import Avatar from '@/components/Avatar';
 import Table from '@/components/Table';
 import Button from '@/components/Button';
 import Countdown from '@/components/Countdown';
+import InputGroup from '@/components/Input/InputGroup';
 import ModalBody from '../ModalBody';
 
 const prices = [30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80];
@@ -113,6 +136,7 @@ export default {
     Button,
     Countdown,
     Avatar,
+    InputGroup,
   },
   data: () => ({
     size: '',
@@ -121,6 +145,7 @@ export default {
     price: 10,
     note: '',
     drinkName: '',
+    isCreating: false,
     isEditing: false,
   }),
   computed: {
@@ -133,7 +158,7 @@ export default {
       const userID = this.info.id;
       return {
         'user.username': { title: '姓名', align: 'center' },
-        'user.picture': { title: '照片', type: 'image', align: 'center' },
+        'user.picture': { title: '', type: 'image', align: 'center' },
         name: { title: '飲料名稱', align: 'center', custom: true },
         price: { title: '價格', align: 'right', custom: true },
         note: { title: '備註', custom: true },
@@ -170,6 +195,12 @@ export default {
     ...mapActions('modal', ['closeModal']),
     isMine(data) {
       return data.user.id === this.info.id;
+    },
+    handleSubmit() {
+      if (this.$refs.orderForm.checkValidity()) {
+        const data = new FormData(this.$refs.orderForm);
+        console.log(data.get('orderNote'));
+      }
     },
     handleClick() {
       this.isEditing = !this.isEditing;
@@ -220,5 +251,13 @@ export default {
 
 .has-ended {
   text-align: center;
+}
+
+[class*='-options'] {
+  margin-top: 0.3em;
+}
+
+.orderForm {
+  margin-bottom: 1em;
 }
 </style>
