@@ -38,4 +38,15 @@ export const createMenu = data =>
     })
   );
 
-export const createOrder = data => {};
+export const updateOrder = data => {};
+export const createOrder = ({ menuID, name, price, note }) =>
+  createAPI('/orders', {
+    method: 'POST',
+    credentials: 'include',
+    body: JSON.stringify({
+      menu_id: menuID,
+      name,
+      price,
+      note,
+    }),
+  });

@@ -14,7 +14,7 @@
     </select>
     <Input
       v-if="type !== 'option'"
-      :inputProps="$props"
+      :inputProps="nonNullProps"
       @input="e => $emit('input', e)"
       @focus="isFocus = true"
       @blur="isFocus = false"
@@ -34,6 +34,17 @@ export default {
     isFocus: false,
   }),
   computed: {
+    nonNullProps() {
+      return Object.keys(this.$props)
+        .filter(key => Boolean(this.$props[key]))
+        .reduce(
+          (acc, current) => ({
+            ...acc,
+            [current]: this.$props[current],
+          }),
+          {}
+        );
+    },
     classNames() {
       return {
         'is-focus': this.isFocus,

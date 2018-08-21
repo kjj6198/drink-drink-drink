@@ -7,6 +7,7 @@
       method="POST"
       enctype="multipart/form-data"
     >
+      <div class="container">
         <label for="name">
           <span>店家名稱</span>
           <input id="name" type="text" name="name" required />
@@ -33,10 +34,12 @@
             @change="handleFileUpload"
           />
         </label>
+        <Button
+          :disabled="loading"
+          :onClick="handleSubmit"
+        >建立飲料店</Button>
+      </div>
     </form>
-    <Button
-      :onClick="handleSubmit"
-    >建立飲料店</Button>
   </ModalBody>  
 </template>
 
@@ -90,6 +93,11 @@ export default {
   max-width: 100%;
 }
 
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
 #drink_shop label {
   display: flex;
   align-items: center;
@@ -98,7 +106,7 @@ export default {
 
 #drink_shop label span {
   display: inline-block;
-  width: 25%;
+  width: 15%;
   text-align: right;
   margin-right: 0.3em;
 }

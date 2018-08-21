@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import CreateMenu from '@/containers/MenuProvider/CreateMenu';
+import CreateMenu from '@/containers/MenuProvider/CreateMenuLoader';
 
 export default {
   components: {

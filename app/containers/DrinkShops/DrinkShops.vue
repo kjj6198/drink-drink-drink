@@ -11,9 +11,7 @@
     <Loading v-if="loading"/>
     <ListWrapper v-if="!loading">
       <Item v-for="drinkShop in list" :key="drinkShop.id">
-        <h3>
-          <router-link class="link" :to="`/drink_shop/${drinkShop.id}`">{{ drinkShop.name }}</router-link>  
-        </h3>
+        <h3>{{ drinkShop.name }}</h3>
         <ul>
           <li>電話：{{ drinkShop.phone }}</li>
           <li>地址：{{ drinkShop.address }}</li>

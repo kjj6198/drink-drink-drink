@@ -9,13 +9,13 @@
         type="text"
         name="name"
         placeholder="請輸入訂單"
-        :required="true"
+        required
       />
       <InputGroup
         type="option"
         label="飲料店家"
         name="drink_shop_id"
-        :required="true"
+        required
       >
         <template slot="options">
           <option
@@ -30,7 +30,7 @@
         type="number"
         name="end_time"
         :min="5"
-        :step="5"
+        :max="1440"
         required
       />
       <InputGroup
@@ -45,9 +45,10 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import Button from '@/components/Button';
 import InputGroup from '@/components/Input/InputGroup';
-import { getDrinkShops, createMenu } from '@/api';
+import { getDrinkShops } from '@/api';
 import formDataToJSON from '@/utils/formDataToJSON';
 
 export default {
@@ -65,24 +66,23 @@ export default {
     drinkShops: [],
   }),
   methods: {
+    ...mapActions('menus', ['createMenu']),
     // TODO: better validation
     handleSubmit() {
+      debugger;
       if (!this.$refs.menu.checkValidity()) {
-        this.errors.push('請填寫時間、名稱、及飲料店家');
+        this.errors = ['請填寫時間、名稱、及飲料店家'];
         return;
       }
+
       const data = new FormData(this.$refs.menu);
       const duration = parseInt(data.get('end_time'), 10);
       data.set(
         'end_time',
         Math.floor((Date.now() + duration * 1000 * 60) / 1000)
       );
-      createMenu(formDataToJSON(data, ['end_time', 'drink_shop_id'])).subscribe(
-        result => {
-          this.$refs.menu.reset();
-          this.$router.push({ path: `/menus/${result.id}` });
-        }
-      );
+
+      this.createMenu(formDataToJSON(data, ['end_time', 'drink_shop_id']));
     },
   },
 };

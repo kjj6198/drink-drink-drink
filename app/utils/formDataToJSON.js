@@ -1,7 +1,7 @@
-export default function formDataToJSON(formData, fields = []) {
+export default function formDataToJSON(formData, intFields = []) {
   const obj = {};
   formData.forEach((value, key) => {
-    if (fields.includes(key)) {
+    if (intFields.includes(key)) {
       const val = parseFloat(value, 10);
 
       if (val) {
