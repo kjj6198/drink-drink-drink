@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 
 const baseURL =
   process.env.NODE_ENV === 'production'
-    ? 'https://drink-17.herokuapp.com'
+    ? 'https://e1uduylps0.execute-api.ap-northeast-1.amazonaws.com/prod'
     : 'http://localhost:8080';
 
 export const createAPI = (path, options = {}) =>
