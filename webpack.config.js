@@ -51,6 +51,7 @@ module.exports = {
       },
     ],
   },
+  target: 'web',
   plugins: [
     new webpack.NamedModulesPlugin(),
     new VueLoaderPlugin(),
