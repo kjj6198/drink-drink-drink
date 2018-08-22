@@ -2,7 +2,7 @@
   <ModalBody @close-modal="closeModal">
     <h2>{{ menu.drink_shop.name }}</h2>
     <ul>
-      <li>杯數：{{ menu.orders.length }}</li>
+      <li>杯數：{{ menu.orders && menu.orders.length  }}</li>
       <li>總計：{{ menu.sum }}</li>
     </ul>
     <img v-if="menu" :src="menu.drink_shop.image_url" alt="">
@@ -14,7 +14,7 @@
       <Countdown :endTime="new Date(menu.end_time)" />
     </div>
     <div class="orders">
-      <form>
+      <form id="editOrder" ref="editOrderForm">
         <Table
           :config="config"
           :data="menu.orders"
@@ -22,19 +22,36 @@
           <template slot="action" slot-scope="action">
             <Button
               v-show="action.data.user.id === info.id"
-              :onClick="handleClick"
+              :onClick="() => handleClick(action.data.id)"
             >{{ isEditing ? '確認' : '修改' }}</Button>
           </template>
           <template slot="name" slot-scope="name">
-            <input v-if="isEditing && isMine(name.data)" type="text" :value="name.data.name" />
+            <input
+              name="name"
+              v-if="isEditing && isMine(name.data) && name.data.id === editOrderID"
+              type="text"
+              :value="name.data.name"
+              required
+            />
             <span v-else>{{ name.data.name }}</span>
           </template>
           <template slot="price" slot-scope="price">
-            <input v-if="isEditing && isMine(price.data)" type="number" :value="price.data.price" />
+            <input
+              required
+              name="price"
+              v-if="isEditing && isMine(price.data) && price.data.id === editOrderID"
+              type="number"
+              :value="price.data.price"
+            />
             <span v-else>{{ price.data.price }}</span>
           </template>
           <template slot="note" slot-scope="note">
-            <input v-if="isEditing && isMine(note.data)" type="text" :value="note.data.note" />
+            <input
+              v-if="isEditing && isMine(note.data) && note.data.id === editOrderID"
+              type="text"
+              name="note"
+              :value="note.data.note"
+            />
             <span v-else>{{ note.data.note }}</span>
           </template>
         </Table>
@@ -50,6 +67,7 @@
         label="飲料名稱"
         required
         :value="name"
+        :disabled="loading"
         @input="e => name = e.target.value"
       >
         <div class="size-options">
@@ -65,6 +83,7 @@
         name="orderPrice"
         label="價格"
         type="number"
+        :disabled="loading"
         :min="15"
         :step="5"
         :value="price"
@@ -85,6 +104,7 @@
         label="備註"
         type="text"
         :value="note"
+        :disabled="loading"
         @input="e => note = e.target.value"
       >
         <div class="note-options">
@@ -106,9 +126,8 @@
       </InputGroup>
     </form>
     <Button
-      v-if="isEnded"
       :onClick="handleSubmit"
-    >
+      v-if="!isEnded">
       新增訂單
     </Button>
   </ModalBody>
@@ -122,6 +141,7 @@ import Table from '@/components/Table';
 import Button from '@/components/Button';
 import Countdown from '@/components/Countdown';
 import InputGroup from '@/components/Input/InputGroup';
+import formDataToJSON from '@/utils/formDataToJSON';
 import ModalBody from '../ModalBody';
 
 const prices = [30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80];
@@ -145,17 +165,17 @@ export default {
     price: 10,
     note: '',
     drinkName: '',
-    isCreating: false,
+    editOrderID: null,
     isEditing: false,
   }),
   computed: {
     ...mapState('modal', ['params']),
     ...mapState('user', ['info']),
+    ...mapState('menus', ['list', 'loading']),
     isEnded() {
       return new Date(this.menu.end_time) < new Date();
     },
     config() {
-      const userID = this.info.id;
       return {
         'user.username': { title: '姓名', align: 'center' },
         'user.picture': { title: '', type: 'image', align: 'center' },
@@ -169,9 +189,7 @@ export default {
       };
     },
     menu() {
-      const menu = this.$store.state.menus.list.find(
-        m => m.id === this.params.menuID
-      );
+      const menu = this.list.find(m => m.id === this.params.menuID);
       return menu;
     },
     sizes: () => sizes,
@@ -193,17 +211,42 @@ export default {
   },
   methods: {
     ...mapActions('modal', ['closeModal']),
+    ...mapActions('menus', ['createOrder', 'updateOrder']),
     isMine(data) {
       return data.user.id === this.info.id;
     },
     handleSubmit() {
       if (this.$refs.orderForm.checkValidity()) {
-        const data = new FormData(this.$refs.orderForm);
-        console.log(data.get('orderNote'));
+        const data = formDataToJSON(new FormData(this.$refs.orderForm), [
+          'orderPrice',
+        ]);
+        this.createOrder({
+          menuID: this.params.menuID,
+          name: data.orderName,
+          price: data.orderPrice,
+          note: data.orderNote,
+        });
+
+        this.$refs.orderForm.reset();
       }
     },
-    handleClick() {
-      this.isEditing = !this.isEditing;
+    handleClick(orderID) {
+      if (!this.isEditing && !this.editOrderID) {
+        this.isEditing = true;
+        this.editOrderID = orderID;
+      } else if (this.isEditing && this.editOrderID !== orderID) {
+        this.isEditing = true;
+        this.editOrderID = orderID;
+      } else if (this.isEditing && this.editOrderID === orderID) {
+        const data = new FormData(this.$refs.editOrderForm);
+        this.updateOrder({
+          ...formDataToJSON(data, ['price']),
+          menuID: this.params.menuID,
+          orderID,
+        });
+        this.isEditing = false;
+        this.editOrderID = null;
+      }
     },
     changeSize(size) {
       this.size = size;

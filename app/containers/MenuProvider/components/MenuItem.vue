@@ -6,7 +6,7 @@
       <span v-if="isEnded">Ended</span>
       <Countdown v-else :endTime="new Date(countdown)" />
     </td>
-    <td class="number">{{ orders.length }}</td>
+    <td class="number">{{ availableOrders.length }}</td>
     <td class="number">{{ totalFormatted }}</td>
     <td><Button :onClick="() => openModal(menuID)" :disabled="isEnded" theme="filled" type="rect">我要訂飲料</Button></td>
   </tr>
@@ -42,6 +42,9 @@ export default {
     },
   },
   computed: {
+    availableOrders() {
+      return this.orders || [];
+    },
     isEnded() {
       const { countdown } = this;
       const endTime = new Date(countdown);

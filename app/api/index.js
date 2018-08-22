@@ -38,11 +38,17 @@ export const createMenu = data =>
     })
   );
 
-export const updateOrder = data => {};
-export const createOrder = ({ menuID, name, price, note }) =>
-  createAPI('/orders', {
-    method: 'POST',
-    credentials: 'include',
+export const mutateOrder = (method = 'POST') => ({
+  orderID = '',
+  menuID,
+  name,
+  price,
+  note,
+}) =>
+  createAPI(`/orders${method === 'PUT' ? `/${orderID}` : ''}`, {
+    method,
+    withCredentials: true,
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       menu_id: menuID,
       name,
@@ -50,3 +56,5 @@ export const createOrder = ({ menuID, name, price, note }) =>
       note,
     }),
   });
+export const createOrder = mutateOrder('POST');
+export const updateOrder = mutateOrder('PUT');

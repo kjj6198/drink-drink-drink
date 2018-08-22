@@ -20,6 +20,7 @@ export default () => ({
   [LOGGING_ERROR](state, payload) {
     Vue.set(state, 'error', payload);
     state.loading = false;
+    state.info = {};
   },
   [LOGOUT_REQUEST](state) {
     state.loading = true;

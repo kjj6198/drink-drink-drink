@@ -69,7 +69,6 @@ export default {
     ...mapActions('menus', ['createMenu']),
     // TODO: better validation
     handleSubmit() {
-      debugger;
       if (!this.$refs.menu.checkValidity()) {
         this.errors = ['請填寫時間、名稱、及飲料店家'];
         return;

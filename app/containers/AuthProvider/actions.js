@@ -14,13 +14,20 @@ export const doLogin = context => {
   context.commit(LOGIN_REQUEST);
   login()
     .do(user => LocalStorage.setItem(KEY_USER_INFO, user))
-    .catch(err => context.commit(LOGGING_ERROR, err))
+    .catch(err => {
+      context.commit(LOGGING_ERROR, err);
+      return Observable.throw(err);
+    })
     .subscribe(user => context.commit(LOGIN, user));
 };
 
 export const doLogout = context => {
   context.commit(LOGOUT_REQUEST);
   logout()
+    .catch(err => {
+      LocalStorage.removeItem(KEY_USER_INFO);
+      return Observable.throw(err);
+    })
     .do(() => LocalStorage.removeItem(KEY_USER_INFO))
     .subscribe(() => context.commit(LOGOUT));
 };
