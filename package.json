@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "webpack-dev-server --config webpack.config.js --hot --inline",
+    "start": "NODE_ENV=development webpack-dev-server --config webpack.config.js --hot --inline",
     "build": "NODE_ENV=production webpack --config ./webpack.config.js --color -p --progress"
   },
   "devDependencies": {
