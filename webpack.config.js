@@ -23,7 +23,7 @@ module.exports = {
     app: './app/index.js',
   },
   output: {
-    publicPath: './',
+    publicPath: '/',
     path: path.join(__dirname, 'build'),
     filename: '[name].[hash:8].js',
   },
