@@ -1,18 +1,20 @@
 <template>
-  <div>
+  <ErrorBoundary>
     <Navbar :isLoggedIn="false" />
     <div class="container">
       <router-view></router-view>
     </div>
     <Modal />
-  </div>
+  </ErrorBoundary>
 </template>
 
 <script>
+import ErrorBoundary from '@/components/ErrorBoundary';
 import Navbar from '@/components/Navbar';
 
 export default {
   components: {
+    ErrorBoundary,
     Navbar,
     Modal: () => import(/* webpackChunkName: "Modal" */ '@/containers/Modal'),
   },

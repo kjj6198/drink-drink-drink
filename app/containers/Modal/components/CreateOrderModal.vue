@@ -1,6 +1,6 @@
 <template>
   <ModalBody @close-modal="closeModal">
-    <h2>{{ menu.drink_shop.name }}</h2>
+    <h2 class="title">{{ menu.drink_shop.name }}</h2>
     <ul>
       <li>杯數：{{ menu.orders && menu.orders.length  }}</li>
       <li>總計：{{ menu.sum }}</li>
@@ -302,5 +302,14 @@ export default {
 
 .orderForm {
   margin-bottom: 1em;
+}
+
+.title {
+  font-size: 4em;
+  margin: 0;
+  text-align: center;
+  -webkit-text-stroke: 1px;
+  -webkit-text-stroke-color: #000;
+  -webkit-text-fill-color: #27cc95;
 }
 </style>

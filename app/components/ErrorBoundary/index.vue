@@ -3,7 +3,11 @@
     <slot></slot>
   </div>
   <!-- TODO: prettify error -->
-  <p v-else-if="hasError && error">某樣東西出錯了</p>
+  <p
+    class="error"
+    v-else-if="hasError && error">
+    如果你看到這則訊息，代表有地方出錯了，請趕快告訴管理員以便修復 bug。
+  </p>
 </template>
 
 <script>
@@ -24,3 +28,8 @@ export default {
 };
 </script>
 
+<style scoped>
+.error {
+  color: #fe6565;
+}
+</style>
