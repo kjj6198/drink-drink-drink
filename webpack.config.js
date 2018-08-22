@@ -5,7 +5,7 @@ const { VueLoaderPlugin } = require('vue-loader');
 const path = require('path');
 
 module.exports = {
-  mode: process.env.NODE_ENV || 'development',
+  mode: process.env.NODE_ENV,
   devServer: {
     host: '127.0.0.1',
     port: 3000,
