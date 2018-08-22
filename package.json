@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "start": "NODE_ENV=development webpack-dev-server --config webpack.config.js --hot --inline",
-    "build": "NODE_ENV=production webpack --config ./webpack.config.js --color -p --progress && mv _redirects build"
+    "start": "NODE_ENV=development webpack-dev-server --config webpack.config.js --hot --inline --mode development",
+    "build": "NODE_ENV=production webpack --config ./webpack.config.js --color -p --progress --mode production && mv _redirects build"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

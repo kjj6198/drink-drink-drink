@@ -5,7 +5,6 @@ const { VueLoaderPlugin } = require('vue-loader');
 const path = require('path');
 
 module.exports = {
-  mode: process.env.NODE_ENV,
   devServer: {
     host: '127.0.0.1',
     port: 3000,
@@ -57,11 +56,22 @@ module.exports = {
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
       filename: 'style.css',
+      disable: process.env.NODE_ENV !== 'production',
     }),
     new HtmlWebpackPlugin({
-      chunks: ['app'],
       filename: 'index.html',
       template: './app/index.html',
+      inject: true,
+      environment: process.env.NODE_ENV,
     }),
   ],
+  optimization: {
+    minimize: true,
+    runtimeChunk: 'single',
+    sideEffects: false,
+    removeEmptyChunks: true,
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
 };
