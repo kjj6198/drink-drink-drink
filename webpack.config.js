@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 const path = require('path');
 
@@ -22,7 +23,7 @@ module.exports = {
     app: './app/index.js',
   },
   output: {
-    publicPath: '/',
+    publicPath: './',
     path: path.join(__dirname, 'build'),
     filename: '[name].[hash:8].js',
   },
@@ -30,7 +31,12 @@ module.exports = {
     rules: [
       {
         test: /.css$/,
-        use: ['vue-style-loader', 'css-loader'],
+        use: [
+          process.env.NODE_ENV === 'production'
+            ? MiniCssExtractPlugin.loader
+            : 'vue-style-loader',
+          'css-loader',
+        ],
       },
       {
         test: /\.vue$/,
@@ -48,6 +54,9 @@ module.exports = {
   plugins: [
     new webpack.NamedModulesPlugin(),
     new VueLoaderPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'style.css',
+    }),
     new HtmlWebpackPlugin({
       chunks: ['app'],
       filename: 'index.html',
