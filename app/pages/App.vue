@@ -13,6 +13,11 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 import Navbar from '@/components/Navbar';
 
 export default {
+  created() {
+    if (!this.isLoggedIn) {
+      this.doAuth();
+    }
+  },
   components: {
     ErrorBoundary,
     Navbar,

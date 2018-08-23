@@ -16,11 +16,6 @@ export default {
     MenuProvider,
     Navbar,
   },
-  created() {
-    if (!this.isLoggedIn) {
-      this.doAuth();
-    }
-  },
   computed: {
     ...mapState('user', ['isLoggedIn']),
   },
