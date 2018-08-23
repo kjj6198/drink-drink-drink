@@ -19,8 +19,5 @@ export default {
   computed: {
     ...mapState('user', ['isLoggedIn']),
   },
-  methods: {
-    ...mapActions('user', ['doAuth']),
-  },
 };
 </script>

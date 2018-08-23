@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import Navbar from '@/components/Navbar';
 
@@ -22,6 +23,9 @@ export default {
     ErrorBoundary,
     Navbar,
     Modal: () => import(/* webpackChunkName: "Modal" */ '@/containers/Modal'),
+  },
+  methods: {
+    ...mapActions('user', ['doAuth']),
   },
 };
 </script>
