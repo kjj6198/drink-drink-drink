@@ -14,7 +14,9 @@ module.exports = {
   },
   resolve: {
     alias: {
-      vue: 'vue/dist/vue.js',
+      vue: process.env.NODE_ENV === 'development'
+        ? 'vue/dist/vue.js'
+        : 'vue/dist/vue.min.js',
     },
     extensions: ['.js', '.vue'],
   },
