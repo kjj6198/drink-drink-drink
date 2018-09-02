@@ -11,6 +11,7 @@
         </tr>
       </thead>
       <tbody>
+          <LoadingCircle v-if="loading" />
           <MenuItem v-for="menu in list"
             :key="menu.id"
             :menuID="menu.id"
@@ -29,6 +30,7 @@
 import Vue from 'vue';
 import { mapActions, mapState, mapGetters } from 'vuex';
 import styled from 'vue-styled-components';
+import LoadingCircle from '@/components/LoadingCircle';
 import MenuItem from './components/MenuItem';
 
 const Table = styled.table`
@@ -67,7 +69,10 @@ export default {
     MenuItem,
   },
   computed: {
-    ...mapGetters({ list: 'menus/list' }),
+    ...mapState('menus', ['loading']),
+    ...mapGetters({
+      list: 'menus/list',
+    }),
   },
   methods: {
     ...mapActions({ fetchMenus: 'menus/fetchMenus' }),

@@ -1,5 +1,6 @@
 <template>
-  <table class="table">
+  <table class="table" v-if="!loading">
+    <LoadingCircle v-if="loading" />
     <caption></caption>
     <thead>
       <tr>
@@ -21,6 +22,8 @@
 </template>
 
 <script>
+import LoadingCircle from '@/components/LoadingCircle';
+
 // TODO: very very simple table
 export default {
   data: () => ({}),
@@ -39,7 +42,7 @@ export default {
       );
     },
   },
-  props: ['data', 'config'],
+  props: ['data', 'config', 'loading'],
 };
 </script>
 
@@ -51,6 +54,7 @@ export default {
 }
 
 table.table {
+  table-layout: fixed;
   width: 100%;
   border-collapse: collapse;
   font-size: 16px;

@@ -8,7 +8,7 @@
     <img v-if="menu" :src="menu.drink_shop.image_url" alt="">
     <div class="menu-info">
       <h3>
-        <Avatar :src="menu.user.picture" :size="40" />
+        <Avatar :src="menu.user.picture" :size="55" />
         由 {{ menu.user.username }} 所發起的 {{ menu.name }}
       </h3>
       <Countdown :endTime="new Date(menu.end_time)" />

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Vuex from 'vuex';
+import { sync } from 'vuex-router-sync';
 import createEpicPlugin from './store/epicPlugin';
 import userModule from '@/containers/AuthProvider/module';
 import './style.js';
@@ -58,6 +59,8 @@ const router = new VueRouter({
   mode: 'history',
   routes,
 });
+
+sync(store, router);
 
 const app = new Vue({
   router,

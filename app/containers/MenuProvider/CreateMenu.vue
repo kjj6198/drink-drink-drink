@@ -82,6 +82,7 @@ export default {
       );
 
       this.createMenu(formDataToJSON(data, ['end_time', 'drink_shop_id']));
+      this.$router.push({ path: '/' });
     },
   },
 };

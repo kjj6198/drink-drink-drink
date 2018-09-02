@@ -2,7 +2,7 @@
   <img
     class="avatar"
     :src="src"
-    :size="size"
+    :style="{ width: `${size}px`, height: `${size}px` }"
     :alt="alt"
     v-bind="$props"
   />
